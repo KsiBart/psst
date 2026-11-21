@@ -1,0 +1,119 @@
+@import "tailwindcss";
+
+/* Theme tokens. Each event sets data-theme on <body>. */
+:root,
+[data-theme="frost"] {
+  --bg: #0e1a2b;
+  --surface: #17263b;
+  --surface-2: #24385a;
+  --ink: #f4f7fb;
+  --muted: #a9b8cc;
+  --accent: #ff6b73;
+  --on-accent: #1a0a0c;
+  --accent-2: #f6c85f;
+  --on-accent-2: #1a1408;
+  --danger: #ff9b9b;
+  color-scheme: dark;
+}
+[data-theme="confetti"] {
+  --bg: #fff6ea;
+  --surface: #ffffff;
+  --surface-2: #f7e3cf;
+  --ink: #24170f;
+  --muted: #6e5a4b;
+  --accent: #c92a62;
+  --on-accent: #ffffff;
+  --accent-2: #1f8a78;
+  --on-accent-2: #ffffff;
+  --danger: #b42318;
+  color-scheme: light;
+}
+[data-theme="aurora"] {
+  --bg: #151229;
+  --surface: #221d40;
+  --surface-2: #332b5c;
+  --ink: #f3f0ff;
+  --muted: #b9b0dc;
+  --accent: #8fe3cf;
+  --on-accent: #0f1f1b;
+  --accent-2: #c4a5ff;
+  --on-accent-2: #1a1430;
+  --danger: #ffa3a3;
+  color-scheme: dark;
+}
+
+@theme inline {
+  --color-bg: var(--bg);
+  --color-surface: var(--surface);
+  --color-surface-2: var(--surface-2);
+  --color-ink: var(--ink);
+  --color-muted: var(--muted);
+  --color-accent: var(--accent);
+  --color-on-accent: var(--on-accent);
+  --color-accent-2: var(--accent-2);
+  --color-on-accent-2: var(--on-accent-2);
+  --color-danger: var(--danger);
+  --font-sans: var(--font-inter), system-ui, sans-serif;
+  --font-display: var(--font-bricolage), var(--font-inter), system-ui, sans-serif;
+}
+
+html {
+  -webkit-text-size-adjust: 100%;
+}
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font-inter), system-ui, sans-serif;
+  transition: background-color 0.4s ease, color 0.4s ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+:focus-visible {
+  outline: 3px solid var(--accent-2);
+  outline-offset: 2px;
+}
+
+/* shared primitives */
+@utility card {
+  @apply rounded-3xl bg-surface p-5;
+}
+@utility input {
+  @apply h-12 w-full rounded-2xl border-2 border-surface-2 bg-surface px-4 text-base text-ink outline-none transition placeholder:text-muted focus:border-accent-2;
+}
+@utility btn {
+  @apply inline-flex min-h-12 cursor-pointer items-center justify-center gap-2 rounded-2xl px-5 text-base font-bold transition select-none active:scale-[0.97] disabled:cursor-default disabled:opacity-50 disabled:active:scale-100;
+}
+@utility btn-primary {
+  @apply btn bg-accent text-on-accent;
+}
+@utility btn-secondary {
+  @apply btn bg-surface-2 text-ink;
+}
+@utility btn-ghost {
+  @apply btn border-2 border-dashed border-surface-2 text-muted;
+}
+@utility label {
+  @apply text-sm font-semibold;
+}
+@utility chip {
+  @apply rounded-full bg-surface-2 px-3 py-1.5 text-sm font-semibold;
+}
+
+@keyframes wiggle {
+  0%, 84%, 100% { transform: rotate(0); }
+  88% { transform: rotate(-7deg); }
+  92% { transform: rotate(6deg); }
+  96% { transform: rotate(-4deg); }
+}
+.animate-wiggle {
+  animation: wiggle 3.2s ease-in-out infinite;
+  transform-origin: 50% 90%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
