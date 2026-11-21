@@ -8,7 +8,7 @@
 The gift draw for Secret Santa, birthdays and office swaps.<br>
 One link. No emails. No spoilers.
 
-[**▶ Open the live app**](https://psst-bartomiej-ksieks-projects.vercel.app) · 🇵🇱 Polski first · 🇬🇧 English inside
+[**▶ Open the live app**](https://psst-bartomiej-ksieks-projects.vercel.app) · 🇵🇱 Polski · 🇬🇧 English
 
 </div>
 
@@ -84,38 +84,6 @@ Animations switch off automatically when the phone's *Reduce motion* setting is 
 - **Passwords:** Argon2id. Sessions are httpOnly cookies, rotated on login and revoked on password change.
 - **Abuse limits:** rate limits on logins, joins and password resets; reset tokens are random, hashed and short-lived.
 - **Locked-down pages:** wishlist links must be http(s), invite codes are unguessable, and strict security headers are set.
-
-## Tech
-
-Next.js 16 (App Router, Server Actions) · React 19 · TypeScript · Tailwind CSS 4 · Motion · Drizzle ORM + Postgres (Neon) · Resend · Vitest + Playwright · hosted on Vercel.
-
-## Run it locally
-
-```bash
-cp .env.example .env.local        # fill in DATABASE_URL and ASSIGNMENT_KEY
-./scripts/set-resend-key.sh       # optional: saves RESEND_API_KEY (hidden input)
-npm install
-npm run db:migrate
-npm run dev
-```
-
-Without `RESEND_API_KEY`, emails are not sent; in development the links are printed to the server console.
-
-| Command | What it does |
-|---|---|
-| `npm test` | unit tests (draw algorithm, encryption, validation) |
-| `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
-| `BASE_URL=http://localhost:3000 npm run test:e2e` | phone-sized browser test of all main flows (creates and deletes a test event) |
-| `npm run screenshots` then `node e2e/banner.mjs` | regenerate the images in this README (local server only) |
-
-## Deploy (Vercel, no domain needed)
-
-1. Import the repo in Vercel. The production branch is `main`.
-2. Add **Neon Postgres** from the Vercel Marketplace. It sets `DATABASE_URL`.
-3. Add the env vars `ASSIGNMENT_KEY` (keep it stable forever), `RESEND_API_KEY` and optionally `EMAIL_FROM`.
-4. Push to `main`. `vercel-build` runs the database migrations, then `next build`.
-
-> Resend without your own domain only delivers from `onboarding@resend.dev` to the Resend account owner's address. Verify a domain to email everyone. Until then, organizers can hand out reset links from the panel.
 
 ---
 
