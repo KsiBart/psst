@@ -1,55 +1,122 @@
-# Psst! — losowanie prezentów
+<div align="center">
 
-Mobile-first gift-exchange app (Secret Santa, birthdays, office swaps). Polish first, English second.
+<img src="docs/screens/banner.png" alt="Psst! — gift exchange app on three phones: Frost, Confetti and Aurora themes" width="100%">
 
-- The organizer creates an event, adds names and sends **one invite link** (share sheet, copy or QR code).
-- Each person picks their name and sets a password. **Email is optional.** Next time they pick their name and type the password.
-- Everyone draws on their own and sees only their own match and that person's wishlist (up to 3 ideas, optional links).
-- **Nobody can see who drew whom, organizer included.** Pairings are encrypted in the database (AES-256-GCM).
-- There are 3 themes per event, each with its own background animation: **Szron** (snow), **Konfetti** and **Zorza** (stars).
+# Psst! 🤫🎁
 
-## Features
+**Kto komu kupuje prezent? Tylko Ty wiesz.**<br>
+The gift draw for Secret Santa, birthdays and office swaps.<br>
+One link. No emails. No spoilers.
 
-| | |
-|---|---|
-| Participants | join with name + password, optional email for resets, wishlist (3 ideas with optional links), hide/show the match, "I've got the gift" checkbox, add-to-calendar (.ics), PL/EN switch |
-| Organizer | budget, date, message, theme, add/remove names, exclusions (e.g. couples), "allow drawing before everyone joins" switch, one-time password reset links for participants, new invite link, reset all draws, delete event, counts only (joined / drawn / have gift) |
-| Draw | done on the server in a single transaction. Prefers one big circle (A→B→C→…→A) and falls back to any valid assignment when exclusions require it. Once someone has drawn, the list is locked until the organizer resets the draws. |
-| Security | Argon2id passwords, DB-backed httpOnly sessions (rotated on login, revoked on password change), rate limiting on logins, joins and resets, 256-bit reset tokens stored hashed (2 h by email / 72 h from the organizer), unguessable invite codes, http(s)-only wishlist links, Server Actions with origin checks, security headers |
+[**▶ Open the live app**](https://psst-bartomiej-ksieks-projects.vercel.app) · 🇵🇱 Polski first · 🇬🇧 English inside
 
-### Easter eggs 🤫
-- Tap the logo 5× quickly to make it snow gifts.
-- Press and hold the logo (or type the Konami code ↑↑↓↓←→←→BA) to make a sleigh with reindeer fly by.
-- Type "hohoho" in a wishlist idea and the gift box sings.
-- Shake the phone while your match is visible for a confetti burst.
+</div>
 
-## Stack
+---
 
-Next.js 16 (App Router, Server Actions) · TypeScript · Tailwind CSS 4 · Motion · Drizzle ORM + Postgres · Resend · Vitest.
+## Why Psst!?
 
-## Local development
+Most Secret Santa tools make everyone sign up with an email, send a dozen messages, and the organizer can still peek at who has whom. **Psst! does it differently:**
+
+- 🔗 **One invite link.** Drop it into the family group chat or show the QR code at the office.
+- 🙋 **Tap your name.** Everyone picks themselves from the list and sets a password. No email, no account.
+- 🎲 **Draw it yourself.** The present wobbles, the lid pops off, and a name appears with confetti. Only you ever see it.
+- 🙈 **Even the organizer can't peek.** Pairings are encrypted in the database; the organizer only sees counts.
+- 📝 **Wishlists that help.** Up to 3 gift ideas with optional shop links, so nobody gets a fifth mug.
+
+## Screens
+
+<table>
+  <tr>
+    <td align="center" width="33%"><img src="docs/screens/home.png" alt="Home screen" width="240"><br><b>Start</b><br><sub>Explains it in 3 steps</sub></td>
+    <td align="center" width="33%"><img src="docs/screens/create.png" alt="Create event form" width="240"><br><b>Create in a minute</b><br><sub>Name, theme, budget, date, people</sub></td>
+    <td align="center" width="33%"><img src="docs/screens/join.png" alt="Invite page with name picker" width="240"><br><b>Join from the link</b><br><sub>Tap your name, set a password</sub></td>
+  </tr>
+  <tr>
+    <td align="center"><img src="docs/screens/dashboard.png" alt="Participant dashboard before the draw" width="240"><br><b>Your dashboard</b><br><sub>Countdown, budget, your wishlist</sub></td>
+    <td align="center"><img src="docs/screens/reveal.png" alt="Reveal screen with match and wishlist" width="240"><br><b>The reveal</b><br><sub>Your match + their wishlist, tap to hide</sub></td>
+    <td align="center"><img src="docs/screens/panel.png" alt="Organizer panel" width="240"><br><b>Organizer panel</b><br><sub>Invite, settings, people, only counts</sub></td>
+  </tr>
+</table>
+
+## Three moods, one app
+
+Each event picks its own theme, and the whole app, including the animated background, follows it.
+
+| | Theme | Feels like | Background |
+|---|---|---|---|
+| ❄️ | **Szron** (Frost) | Christmas, winter evenings | gently falling snow |
+| 🎉 | **Konfetti** | birthdays, parties | tumbling confetti |
+| ✨ | **Zorza** (Aurora) | any occasion, office swaps | twinkling stars |
+
+Animations switch off automatically when the phone's *Reduce motion* setting is on.
+
+## Everything it does
+
+**For participants**
+- Join with name + password, with an optional email for password resets
+- Draw your person with a gift-box animation and confetti; hide or show the name with a tap
+- Wishlist: up to 3 ideas, links optional
+- „Mam już prezent”: tick it when you've bought the gift (the organizer only sees a count)
+- Countdown, budget, a message from the organizer, add-to-calendar (.ics)
+- Polish / English switch; install it on your home screen like an app
+
+**For organizers**
+- Create events in a minute and take part yourself
+- Share the invite via the share sheet, copy or a QR code, or generate a new link
+- Edit the name, theme, budget, date and message at any time
+- Add or remove people and set exclusions (couples won't draw each other)
+- Decide whether drawing may start before everyone has joined
+- Someone forgot their password? Hand them a one-time reset link (or email it)
+- Reset all draws, delete the event
+
+## 🥚 Psst… easter eggs
+
+- Tap the logo **5×** quickly to make it snow gifts.
+- **Press and hold** the logo, or type the Konami code ↑↑↓↓←→←→BA, and a sleigh flies by.
+- Type **„hohoho”** in a wishlist idea and the gift box sings.
+- **Shake your phone** while your match is on screen for a confetti burst.
+
+## Privacy & security
+
+- **Nobody sees the pairs.** Who-drew-whom is encrypted with AES-256-GCM and only decrypted for the giver.
+- **Fair draw.** It's done once, on the server, in a single transaction. Nobody ever gets themselves, exclusions are respected, and it prefers one big circle so people don't simply swap gifts.
+- **Passwords:** Argon2id. Sessions are httpOnly cookies, rotated on login and revoked on password change.
+- **Abuse limits:** rate limits on logins, joins and password resets; reset tokens are random, hashed and short-lived.
+- **Locked-down pages:** wishlist links must be http(s), invite codes are unguessable, and strict security headers are set.
+
+## Tech
+
+Next.js 16 (App Router, Server Actions) · React 19 · TypeScript · Tailwind CSS 4 · Motion · Drizzle ORM + Postgres (Neon) · Resend · Vitest + Playwright · hosted on Vercel.
+
+## Run it locally
 
 ```bash
-cp .env.example .env.local          # then fill in DATABASE_URL and ASSIGNMENT_KEY
-./scripts/set-resend-key.sh         # optional: saves RESEND_API_KEY (hidden input)
+cp .env.example .env.local        # fill in DATABASE_URL and ASSIGNMENT_KEY
+./scripts/set-resend-key.sh       # optional: saves RESEND_API_KEY (hidden input)
 npm install
 npm run db:migrate
 npm run dev
 ```
 
-Without `RESEND_API_KEY`, emails are not sent. In development the links are printed to the server console instead.
+Without `RESEND_API_KEY`, emails are not sent; in development the links are printed to the server console.
 
-Tests: `npm test` (draw algorithm, encryption, validation) · `npm run lint` · `npm run typecheck`.
+| Command | What it does |
+|---|---|
+| `npm test` | unit tests (draw algorithm, encryption, validation) |
+| `npm run lint` / `npm run typecheck` | ESLint / TypeScript |
+| `BASE_URL=http://localhost:3000 npm run test:e2e` | phone-sized browser test of all main flows (creates and deletes a test event) |
+| `npm run screenshots` then `node e2e/banner.mjs` | regenerate the images in this README (local server only) |
 
-## Deploy to Vercel (no custom domain needed)
+## Deploy (Vercel, no domain needed)
 
-1. Import this repository in Vercel (Framework: Next.js).
-2. Storage → add **Neon Postgres** from the Marketplace. It sets `DATABASE_URL` for you.
-3. Settings → Environment Variables: add `ASSIGNMENT_KEY` (see `.env.example`), `RESEND_API_KEY` and optionally `EMAIL_FROM`.
-4. Deploy. The `vercel-build` script runs the database migrations before `next build`. The app runs on `https://<project>.vercel.app`.
+1. Import the repo in Vercel. The production branch is `main`.
+2. Add **Neon Postgres** from the Vercel Marketplace. It sets `DATABASE_URL`.
+3. Add the env vars `ASSIGNMENT_KEY` (keep it stable forever), `RESEND_API_KEY` and optionally `EMAIL_FROM`.
+4. Push to `main`. `vercel-build` runs the database migrations, then `next build`.
 
-> **Resend without a domain:** the `onboarding@resend.dev` sender only delivers to the email address of your Resend account. To email other people (participants or other organizers), verify a domain in Resend and set `EMAIL_FROM`. Until then, organizers can always hand out password reset links themselves from the panel.
+> Resend without your own domain only delivers from `onboarding@resend.dev` to the Resend account owner's address. Verify a domain to email everyone. Until then, organizers can hand out reset links from the panel.
 
-## Changing the schema
+---
 
-Edit `src/db/schema.ts` → `npm run db:generate` → commit the new file in `drizzle/`.
+<div align="center"><sub>Made with 🎁. Psst… don't tell anyone who you drew.</sub></div>
