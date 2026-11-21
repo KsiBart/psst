@@ -57,7 +57,7 @@ export function JoinForm({ code, people, t }: { code: string; people: Person[]; 
           >
             <input type="hidden" name="code" value={code} />
             <input type="hidden" name="participantId" value={picked.id} />
-            {picked.isOrganizer && !picked.joined ? null : picked.isOrganizer ? (
+            {picked.isOrganizer ? (
               <div className="card flex flex-col gap-3">
                 <p className="text-sm">{t.organizerEntry}</p>
                 <Link href="/logowanie" className="btn-primary">
